@@ -1,8 +1,6 @@
-# 附录B 更多关于IPython的内容（完）
-
 第2章中，我们学习了IPython shell和Jupyter notebook的基础。本章中，我们会探索IPython更深层次的功能，可以从控制台或在jupyter使用。
 
-## B.1 使用命令历史
+# B.1 使用命令历史
 
 Ipython维护了一个位于磁盘的小型数据库，用于保存执行的每条指令。它的用途有：
 
@@ -12,7 +10,7 @@ Ipython维护了一个位于磁盘的小型数据库，用于保存执行的每�
 
 这些功能在shell中，要比notebook更为有用，因为notebook从设计上是将输入和输出的代码放到每个代码格子中。
 
-### 搜索和重复使用命令历史
+## 搜索和重复使用命令历史
 
 Ipython可以让你搜索和执行之前的代码或其他命令。这个功能非常有用，因为你可能需要重复执行同样的命令，例如%run命令，或其它代码。假设你必须要执行：
 ```python
@@ -30,7 +28,7 @@ In [1]: a_command = foo(x, y, z)
 
 Ctrl-R会循环历史，找到匹配字符的每一行。
 
-### 输入和输出变量
+## 输入和输出变量
 
 忘记将函数调用的结果分配给变量是非常烦人的。IPython的一个session会在一个特殊变量，存储输入和输出Python对象的引用。前面两个输出会分别存储在 _（一个下划线）和 __（两个下划线）变量：
 ```python
@@ -66,7 +64,7 @@ In [30]: exec(_i27)
 
 >警告：当处理非常大的数据集时，要记住IPython的输入和输出的历史会造成被引用的对象不被垃圾回收（释放内存），即使你使用del关键字从交互命名空间删除变量。在这种情况下，小心使用xdel %和%reset可以帮助你避免陷入内存问题。
 
-## B.2 与操作系统交互
+# B.2 与操作系统交互
 
 IPython的另一个功能是无缝连接文件系统和操作系统。这意味着，在同时做其它事时，无需退出IPython，就可以像Windows或Unix使用命令行操作，包括shell命令、更改目录、用Python对象（列表或字符串）存储结果。它还有简单的命令别名和目录书签功能。
 
@@ -74,7 +72,7 @@ IPython的另一个功能是无缝连接文件系统和操作系统。这意味�
 
 ![表B-1 IPython系统相关命令](http://upload-images.jianshu.io/upload_images/7178691-4da7ee14be2da211.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### Shell命令和别名
+## Shell命令和别名
 用叹号开始一行，是告诉IPython执行叹号后面的所有内容。这意味着你可以删除文件（取决于操作系统，用rm或del）、改变目录或执行任何其他命令。
 
 通过给变量加上叹号，你可以在一个变量中存储命令的控制台输出。例如，在我联网的基于Linux的主机上，我可以获得IP地址为Python变量：
@@ -123,7 +121,7 @@ macrodata.csv  spx.csv	tips.csv
 
 当session结束，你定义的别名就会失效。要创建恒久的别名，需要使用配置。
 
-### 目录书签系统
+## 目录书签系统
 
 IPython有一个简单的目录书签系统，可以让你保存常用目录的别名，这样在跳来跳去的时候会非常方便。例如，假设你想创建一个书签，指向本书的补充内容：
 ```python
@@ -146,11 +144,11 @@ py4da -> /home/wesm/code/pydata-book-source
 
 书签，和别名不同，在session之间是保持的。
 
-## B.3 软件开发工具
+# B.3 软件开发工具
 
 除了作为优秀的交互式计算和数据探索环境，IPython也是有效的Python软件开发工具。在数据分析中，最重要的是要有正确的代码。幸运的是，IPython紧密集成了和加强了Python内置的pdb调试器。第二，需要快速的代码。对于这点，IPython有易于使用的代码计时和分析工具。我会详细介绍这些工具。
 
-### 交互调试器
+## 交互调试器
 
 IPython的调试器用tab补全、语法增强、逐行异常追踪增强了pdb。调试代码的最佳时间就是刚刚发生错误。异常发生之后就输入%debug，就启动了调试器，进入抛出异常的堆栈框架：
 
@@ -270,7 +268,7 @@ ipdb> !b
 
 ![表B-2 IPython调试器命令](http://upload-images.jianshu.io/upload_images/7178691-90a4b17e20b5b03a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### 使用调试器的其它方式
+## 使用调试器的其它方式
 
 还有一些其它工作可以用到调试器。第一个是使用特殊的set_trace函数（根据pdb.set_trace命名的），这是一个简装的断点。还有两种方法是你可能想用的（像我一样，将其添加到IPython的配置）：
 ```python
@@ -341,7 +339,7 @@ ipdb> c
 ipdb>
 ```
 
-### 代码计时：%time 和 %timeit
+## 代码计时：%time 和 %timeit
 
 对于大型和长时间运行的数据分析应用，你可能希望测量不同组件或单独函数调用语句的执行时间。你可能想知道哪个函数占用的时间最长。幸运的是，IPython可以让你开发和测试代码时，很容易地获得这些信息。
 
@@ -358,7 +356,7 @@ elapsed_per = (time.time() - start) / iterations
 
 %time会运行一次语句，报告总共的执行时间。假设我们有一个大的字符串列表，我们想比较不同的可以挑选出特定开头字符串的方法。这里有一个含有600000字符串的列表，和两个方法，用以选出foo开头的字符串：
 ```python
-## a very large list of strings
+# a very large list of strings
 strings = ['foo', 'foobar', 'baz', 'qux',
            'python', 'Guido Van Rossum'] * 100000
 
@@ -402,7 +400,7 @@ In [568]: %timeit x[:3] == y
 10000000 loops, best of 3: 147 ns per loop
 ```
 
-### 基础分析：%prun和%run -p
+## 基础分析：%prun和%run -p
 
 分析代码与代码计时关系很紧密，除了它关注的是“时间花在了哪里”。Python主要的分析工具是cProfile模块，它并不局限于IPython。cProfile会执行一个程序或任意的代码块，并会跟踪每个函数执行的时间。
 
@@ -479,11 +477,11 @@ ncalls  tottime  percall  cumtime  percall filename:lineno(function)
 
 使用IPython或Jupyter，还有一些其它工具可以让分析工作更便于理解。其中之一是SnakeViz（https://github.com/jiffyclub/snakeviz/），它会使用d3.js产生一个分析结果的交互可视化界面。
 
-### 逐行分析函数
+## 逐行分析函数
 
 有些情况下，用%prun（或其它基于cProfile的分析方法）得到的信息，不能获得函数执行时间的整个过程，或者结果过于复杂，加上函数名，很难进行解读。对于这种情况，有一个小库叫做line_profiler（可以通过PyPI或包管理工具获得）。它包含IPython插件，可以启用一个新的魔术函数%lprun，可以对一个函数或多个函数进行逐行分析。你可以通过修改IPython配置（查看IPython文档或本章后面的配置小节）加入下面这行，启用这个插件：
 ```python
-## A list of dotted module names of IPython extensions to load.
+# A list of dotted module names of IPython extensions to load.
 c.TerminalIPythonApp.extensions = ['line_profiler']
 ```
 
@@ -572,13 +570,13 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
 
 >笔记：使用%lprun必须要指明函数名的原因是追踪每行的执行时间的损耗过多。追踪无用的函数会显著地改变结果。
 
-## B.4 使用IPython高效开发的技巧
+# B.4 使用IPython高效开发的技巧
 
 方便快捷地写代码、调试和使用是每个人的目标。除了代码风格，流程细节（比如代码重载）也需要一些调整。
 
 因此，这一节的内容更像是门艺术而不是科学，还需要你不断的试验，以达成高效。最终，你要能结构优化代码，并且能省时省力地检查程序或函数的结果。我发现用IPython设计的软件比起命令行，要更适合工作。尤其是当发生错误时，你需要检查自己或别人写的数月或数年前写的代码的错误。
 
-### 重载模块依赖
+## 重载模块依赖
 
 在Python中，当你输入import some_lib，some_lib中的代码就会被执行，所有的变量、函数和定义的引入，就会被存入到新创建的some_lib模块命名空间。当下一次输入some_lib，就会得到一个已存在的模块命名空间的引用。潜在的问题是当你%run一个脚本，它依赖于另一个模块，而这个模块做过修改，就会产生问题。假设我在test_script.py中有如下代码：
 ```python
@@ -599,11 +597,11 @@ importlib.reload(some_lib)
 
 这可以保证每次运行test_script.py时可以加载最新的some_lib.py。很明显，如果依赖更深，在各处都使用reload是非常麻烦的。对于这个问题，IPython有一个特殊的dreload函数（它不是魔术函数）重载深层的模块。如果我运行过some_lib.py，然后输入dreload(some_lib)，就会尝试重载some_lib和它的依赖。不过，这个方法不适用于所有场景，但比重启IPython强多了。
 
-### 代码设计技巧
+## 代码设计技巧
 
 对于这单，没有简单的对策，但是有一些原则，是我在工作中发现很好用的。
 
-### 保持相关对象和数据活跃
+## 保持相关对象和数据活跃
 
 为命令行写一个下面示例中的程序是很少见的：
 ```python
@@ -623,21 +621,21 @@ if __name__ == '__main__':
 
 在IPython中运行这个程序会发生问题，你发现是什么了吗？运行之后，任何定义在main函数中的结果和对象都不能在IPython中被访问到。更好的方法是将main中的代码直接在模块的命名空间中执行（或者在``__name__ == '__main__':``中，如果你想让这个模块可以被引用）。这样，当你%rundiamante，就可以查看所有定义在main中的变量。这等价于在Jupyter notebook的代码格中定义一个顶级变量。
 
-### 扁平优于嵌套
+## 扁平优于嵌套
 
 深层嵌套的代码总让我联想到洋葱皮。当测试或调试一个函数时，你需要剥多少层洋葱皮才能到达目标代码呢？“扁平优于嵌套”是Python之禅的一部分，它也适用于交互式代码开发。尽量将函数和类去耦合和模块化，有利于测试（如果你是在写单元测试）、调试和交互式使用。
 
-### 克服对大文件的恐惧
+## 克服对大文件的恐惧
 
 如果你之前是写JAVA（或者其它类似的语言），你可能被告知要让文件简短。在多数语言中，这都是合理的建议：太长会让人感觉是坏代码，意味着重构和重组是必要的。但是，在用IPython开发时，运行10个相关联的小文件（小于100行），比起两个或三个长文件，会让你更头疼。更少的文件意味着重载更少的模块和更少的编辑时在文件中跳转。我发现维护大模块，每个模块都是紧密组织的，会更实用和Pythonic。经过方案迭代，有时会将大文件分解成小文件。
 
 我不建议极端化这条建议，那样会形成一个单独的超大文件。找到一个合理和直观的大型代码模块库和封装结构往往需要一点工作，但这在团队工作中非常重要。每个模块都应该结构紧密，并且应该能直观地找到负责每个功能领域功能和类。
 
-## B.5 IPython高级功能
+# B.5 IPython高级功能
 
 要全面地使用IPython系统需要用另一种稍微不同的方式写代码，或深入IPython的配置。
 
-### 让类是对IPython友好的
+## 让类是对IPython友好的
 
 IPython会尽可能地在控制台美化展示每个字符串。对于许多对象，比如字典、列表和元组，内置的pprint模块可以用来美化格式。但是，在用户定义的类中，你必自己生成字符串。假设有一个下面的简单的类：
 ```python
@@ -668,7 +666,7 @@ In [580]: x
 Out[580]: Message: I have a secret
 ```
 
-### 文件和配置
+## 文件和配置
 
 通过扩展配置系统，大多数IPython和Jupyter notebook的外观（颜色、提示符、行间距等等）和动作都是可以配置的。通过配置，你可以做到：
 
@@ -726,7 +724,7 @@ $ mv ~/.jupyter/jupyter_notebook_config.py ~/.jupyter/my_custom_config.py
  jupyter notebook --config=~/.jupyter/my_custom_config.py
 ```
 
-## B.6 总结
+# B.6 总结
 学习过本书中的代码案例，你的Python技能得到了一定的提升，我建议你持续学习IPython和Jupyter。因为这两个项目的设计初衷就是提高生产率的，你可能还会发现一些工具，可以让你更便捷地使用Python和计算库。
 
 你可以在nbviewer（https://nbviewer.jupyter.org/）上找到更多有趣的Jupyter notebooks。

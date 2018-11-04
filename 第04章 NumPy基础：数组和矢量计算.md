@@ -1,3 +1,5 @@
+# 第04章 NumPy基础：数组和矢量计算
+
 NumPy（Numerical Python的简称）是Python数值计算最重要的基础包。大多数提供科学计算的包都是用NumPy的数组作为构建基础。
 
 NumPy的部分功能如下：
@@ -52,14 +54,14 @@ Wall time: 1.05 s
 
 基于NumPy的算法要比纯Python快10到100倍（甚至更快），并且使用的内存更少。
 
-# 4.1 NumPy的ndarray：一种多维数组对象
+## 4.1 NumPy的ndarray：一种多维数组对象
 NumPy最重要的一个特点就是其N维数组对象（即ndarray），该对象是一个快速而灵活的大数据集容器。你可以利用这种数组对整块数据执行一些数学运算，其语法跟标量元素之间的运算一样。
 
 要明白Python是如何利用与标量值类似的语法进行批次计算，我先引入NumPy，然后生成一个包含随机数据的小数组：
 ```python
 In [12]: import numpy as np
 
-# Generate some random data
+## Generate some random data
 In [13]: data = np.random.randn(2, 3)
 
 In [14]: data
@@ -98,7 +100,7 @@ Out[18]: dtype('float64')
 
 >笔记：当你在本书中看到“数组”、“NumPy数组”、"ndarray"时，基本上都指的是同一样东西，即ndarray对象。
 
-## 创建ndarray
+### 创建ndarray
 创建数组最简单的办法就是使用array函数。它接受一切序列型的对象（包括其他数组），然后产生一个新的含有传入数据的NumPy数组。以一个列表的转换为例：
 ```python
 In [19]: data1 = [6, 7.5, 8, 0, 1]
@@ -172,7 +174,7 @@ Out[32]: array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14])
 
 ![表4-1 数组创建函数](http://upload-images.jianshu.io/upload_images/7178691-78ab11f67e7077a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-## ndarray的数据类型
+### ndarray的数据类型
 dtype（数据类型）是一个特殊的对象，它含有ndarray将一块内存解释为特定数据类型所需的信息：
 ```python
 In [33]: arr1 = np.array([1, 2, 3], dtype=np.float64)
@@ -252,7 +254,7 @@ array([         0, 1075314688,          0, 1075707904,          0,
 
 >笔记：调用astype总会创建一个新的数组（一个数据的备份），即使新的dtype与旧的dtype相同。
 
-## NumPy数组的运算
+### NumPy数组的运算
 数组很重要，因为它使你不用编写循环即可对数据执行批量运算。NumPy用户称其为矢量化（vectorization）。大小相等的数组之间的任何算术运算都会将运算应用到元素级：
 ```python
 In [51]: arr = np.array([[1., 2., 3.], [4., 5., 6.]])
@@ -303,7 +305,7 @@ array([[False,  True, False],
 
 不同大小的数组之间的运算叫做广播（broadcasting），将在附录A中对其进行详细讨论。本书的内容不需要对广播机制有多深的理解。
 
-## 基本的索引和切片
+### 基本的索引和切片
 NumPy数组的索引是一个内容丰富的主题，因为选取数据子集或单个元素的方式有很多。一维数组很简单。从表面上看，它们跟Python列表的功能差不多：
 ```python
 In [60]: arr = np.arange(10)
@@ -439,7 +441,7 @@ Out[87]: array([7, 8, 9])
 
 注意，在上面所有这些选取数组子集的例子中，返回的数组都是视图。
 
-## 切片索引
+### 切片索引
 ndarray的切片语法跟Python列表这样的一维对象差不多：
 ```python
 In [88]: arr
@@ -510,7 +512,7 @@ array([[1, 0, 0],
        [7, 8, 9]])
 ```
 
-## 布尔型索引
+### 布尔型索引
 来看这样一个例子，假设我们有一个用于存储数据的数组以及一个存储姓名的数组（含有重复项）。在这里，我将使用numpy.random中的randn函数生成一些正态分布的随机数据：
 ```python
 In [98]: names = np.array(['Bob', 'Joe', 'Will', 'Bob', 'Will', 'Joe', 'Joe'])
@@ -646,7 +648,7 @@ array([[ 7.    ,  7.    ,  7.    ,  7.    ],
 
 后面会看到，这类二维数据的操作也可以用pandas方便的来做。
 
-## 花式索引
+### 花式索引
 花式索引（Fancy indexing）是一个NumPy术语，它指的是利用整数数组进行索引。假设我们有一个8×4数组：
 ```python
 In [117]: arr = np.empty((8, 4))
@@ -720,7 +722,7 @@ array([[ 4,  7,  5,  6],
 
 记住，花式索引跟切片不一样，它总是将数据复制到新数组中。
 
-## 数组转置和轴对换
+### 数组转置和轴对换
 转置是重塑的一种特殊形式，它返回的是源数据的视图（不会进行任何复制操作）。数组不仅有transpose方法，还有一个特殊的T属性：
 ```python
 In [126]: arr = np.arange(15).reshape((3, 5))
@@ -804,7 +806,7 @@ array([[[ 0,  4],
 
 swapaxes也是返回源数据的视图（不会进行任何复制操作）。
 
-# 4.2 通用函数：快速的元素级数组函数
+## 4.2 通用函数：快速的元素级数组函数
 通用函数（即ufunc）是一种对ndarray中的数据执行元素级运算的函数。你可以将其看做简单函数（接受一个或多个标量值，并产生一个或多个标量值）的矢量化包装器。
 
 许多ufunc都是简单的元素级变体，如sqrt和exp：
@@ -893,7 +895,7 @@ Out[154]: array([    nan,     nan,     nan,  2.318 ,  1.9022,  1.8574,  2.2378])
 
 ![](http://upload-images.jianshu.io/upload_images/7178691-236dba83b6a420cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-# 4.3 利用数组进行数据处理
+## 4.3 利用数组进行数据处理
 NumPy数组使你可以将许多种数据处理任务表述为简洁的数组表达式（否则需要编写循环）。用数组表达式代替循环的做法，通常被称为矢量化。一般来说，矢量化数组运算要比等价的纯Python方式快上一两个数量级（甚至更多），尤其是各种数值计算。在后面内容中（见附录A）我将介绍广播，这是一种针对矢量化计算的强大手段。
 
 作为简单的例子，假设我们想要在一组值（网格型）上计算函数``sqrt(x^2+y^2)``。np.meshgrid函数接受两个一维数组，并产生两个二维矩阵（对应于两个数组中所有的(x,y)对）：
@@ -942,7 +944,7 @@ Out[162]: <matplotlib.text.Text at 0x7f715d2de748>
 
 ![图4-3 根据网格对函数求值的结果](http://upload-images.jianshu.io/upload_images/7178691-3b22000d4cd38650.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-## 将条件逻辑表述为数组运算
+### 将条件逻辑表述为数组运算
 numpy.where函数是三元表达式x if condition else y的矢量化版本。假设我们有一个布尔数组和两个值数组：
 ```python
 In [165]: xarr = np.array([1.1, 1.2, 1.3, 1.4, 1.5])
@@ -1007,7 +1009,7 @@ array([[-0.5031, -0.6223, -0.9212, -0.7262],
 
 传递给where的数组大小可以不相等，甚至可以是标量值。
 
-## 数学和统计方法
+### 数学和统计方法
 可以通过数组上的一组数学函数对整个数组或某个轴向的数据进行统计计算。sum、mean以及标准差std等聚合计算（aggregation，通常叫做约简（reduction））既可以当做数组的实例方法调用，也可以当做顶级NumPy函数使用。
 
 这里，我生成了一些正态分布随机数据，然后做了聚类统计：
@@ -1080,7 +1082,7 @@ array([[  0,   0,   0],
 
 ![](http://upload-images.jianshu.io/upload_images/7178691-866fcde885b1d357.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-## 用于布尔型数组的方法
+### 用于布尔型数组的方法
 在上面这些方法中，布尔值会被强制转换为1（True）和0（False）。因此，sum经常被用来对布尔型数组中的True值计数：
 ```python
 In [190]: arr = np.random.randn(100)
@@ -1102,7 +1104,7 @@ Out[194]: False
 
 这两个方法也能用于非布尔型数组，所有非0元素将会被当做True。
 
-## 排序
+### 排序
 跟Python内置的列表类型一样，NumPy数组也可以通过sort方法就地排序：
 ```python
 In [195]: arr = np.random.randn(6)
@@ -1151,7 +1153,7 @@ Out[205]: -1.5311513550102103
 
 更多关于NumPy排序方法以及诸如间接排序之类的高级技术，请参阅附录A。在pandas中还可以找到一些其他跟排序有关的数据操作（比如根据一列或多列对表格型数据进行排序）。
 
-## 唯一化以及其它的集合逻辑
+### 唯一化以及其它的集合逻辑
 NumPy提供了一些针对一维ndarray的基本集合运算。最常用的可能要数np.unique了，它用于找出数组中的唯一值并返回已排序的结果：
 ```python
 In [206]: names = np.array(['Bob', 'Joe', 'Will', 'Bob', 'Will', 'Joe', 'Joe'])
@@ -1184,7 +1186,7 @@ Out[212]: array([ True, False, False,  True,  True, False,  True], dtype=bool)
 NumPy中的集合函数请参见表4-6。
 ![](http://upload-images.jianshu.io/upload_images/7178691-80e85ae6b9c89ada.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-# 4.4 用于数组的文件输入输出
+## 4.4 用于数组的文件输入输出
 NumPy能够读写磁盘上的文本数据或二进制数据。这一小节只讨论NumPy的内置二进制格式，因为更多的用户会使用pandas或其它工具加载文本或表格数据（见第6章）。
 
 np.save和np.load是读写磁盘数组数据的两个主要函数。默认情况下，数组是以未压缩的原始二进制格式保存在扩展名为.npy的文件中的：
@@ -1218,7 +1220,7 @@ Out[218]: array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 In [219]: np.savez_compressed('arrays_compressed.npz', a=arr, b=arr)
 ```
 
-# 4.5 线性代数
+## 4.5 线性代数
 线性代数（如矩阵乘法、矩阵分解、行列式以及其他方阵数学等）是任何数组库的重要组成部分。不像某些语言（如MATLAB），通过*对两个二维数组相乘得到的是一个元素级的积，而不是一个矩阵点积。因此，NumPy提供了一个用于矩阵乘法的dot函数（既是一个数组方法也是numpy命名空间中的一个函数）：
 ```python
 In [223]: x = np.array([[1., 2., 3.], [4., 5., 6.]])
@@ -1303,7 +1305,7 @@ array([[-1.6914,  4.38  ,  0.1757,  0.4075, -0.7838],
 
 ![](http://upload-images.jianshu.io/upload_images/7178691-dcdb66e49e5f70ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-# 4.6 伪随机数生成
+## 4.6 伪随机数生成
 numpy.random模块对Python内置的random进行了补充，增加了一些用于高效生成多种概率分布的样本值的函数。例如，你可以用normal来得到一个标准正态分布的4×4样本数组：
 ```python
 In [238]: samples = np.random.normal(size=(4, 4))
@@ -1350,7 +1352,7 @@ array([ 0.4714, -1.191 ,  1.4327, -0.3127, -0.7206,  0.8872,  0.8596,
 
 ![](http://upload-images.jianshu.io/upload_images/7178691-6ed04fae3d1178e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-# 4.7 示例：随机漫步
+## 4.7 示例：随机漫步
 我们通过模拟随机漫步来说明如何运用数组运算。先来看一个简单的随机漫步的例子：从0开始，步长1和－1出现的概率相等。
 
 下面是一个通过内置的random模块以纯Python的方式实现1000步的随机漫步：
@@ -1401,7 +1403,7 @@ Out[257]: 37
 
 注意，这里使用argmax并不是很高效，因为它无论如何都会对数组进行完全扫描。在本例中，只要发现了一个True，那我们就知道它是个最大值了。
 
-## 一次模拟多个随机漫步
+### 一次模拟多个随机漫步
 如果你希望模拟多个随机漫步过程（比如5000个），只需对上面的代码做一点点修改即可生成所有的随机漫步过程。只要给numpy.random的函数传入一个二元元组就可以产生一个二维数组，然后我们就可以一次性计算5000个随机漫步过程（一行一个）的累计和了：
 ```python
 In [258]: nwalks = 5000
@@ -1459,5 +1461,5 @@ In [271]: steps = np.random.normal(loc=0, scale=0.25,
    .....:                          size=(nwalks, nsteps))
 ```
 
-# 4.8 结论
+## 4.8 结论
 虽然本书剩下的章节大部分是用pandas规整数据，我们还是会用到相似的基于数组的计算。在附录A中，我们会深入挖掘NumPy的特点，进一步学习数组的技巧。

@@ -1,3 +1,5 @@
+# 第05章 pandas入门
+
 pandas是本书后续内容的首选库。它含有使数据清洗和分析工作变得更快更简单的数据结构和操作工具。pandas经常和其它工具一同使用，如数值计算工具NumPy和SciPy，分析库statsmodels和scikit-learn，和数据可视化库matplotlib。pandas是基于NumPy数组构建的，特别是基于数组的函数和不使用for循环的数据处理。
 
 虽然pandas采用了大量的NumPy编码风格，但二者最大的不同是pandas是专门为处理表格和混杂数据设计的。而NumPy更适合处理统一的数值数组数据。
@@ -14,10 +16,10 @@ In [1]: import pandas as pd
 In [2]: from pandas import Series, DataFrame
 ```
 
-# 5.1 pandas的数据结构介绍
+## 5.1 pandas的数据结构介绍
 要使用pandas，你首先就得熟悉它的两个主要数据结构：Series和DataFrame。虽然它们并不能解决所有问题，但它们为大多数应用提供了一种可靠的、易于使用的基础。
 
-## Series
+### Series
 Series是一种类似于一维数组的对象，它由一组数据（各种NumPy数据类型）以及一组与之相关的数据标签（即索引）组成。仅由一组数据即可产生最简单的Series：
 ```python
 In [11]: obj = pd.Series([4, 7, -5, 3])
@@ -239,7 +241,7 @@ Ryan     3
 dtype: int64
 ```
 
-## DataFrame
+### DataFrame
 DataFrame是一个表格型的数据结构，它含有一组有序的列，每列可以是不同的值类型（数值、字符串、布尔值等）。DataFrame既有行索引也有列索引，它可以被看做由Series组成的字典（共用同一个索引）。DataFrame中的数据是以一个或多个二维块存放的（而不是列表、字典或别的一维数据结构）。有关DataFrame内部的技术细节远远超出了本书所讨论的范围。
 
 >笔记：虽然DataFrame是以二维结构保存数据的，但你仍然可以轻松地将其表示为更高维度的数据（层次化索引的表格型结构，这是pandas中许多高级数据处理功能的关键要素，我们会在第8章讨论这个问题）。
@@ -511,7 +513,7 @@ array([[2000, 'Ohio', 1.5, nan],
        [2003, 'Nevada', 3.2, nan]], dtype=object)
 ```
 
-## 索引对象
+### 索引对象
 pandas的索引对象负责管理轴标签和其他元数据（比如轴名称等）。构建Series或DataFrame时，所用到的任何数组或其他序列的标签都会被转换成一个Index：
 ```python
 In [76]: obj = pd.Series(range(3), index=['a', 'b', 'c'])
@@ -585,10 +587,10 @@ Out[90]: Index(['foo', 'foo', 'bar', 'bar'], dtype='object')
 
 ![](http://upload-images.jianshu.io/upload_images/7178691-5499d14f0e2cd639.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-# 5.2 基本功能
+## 5.2 基本功能
 本节中，我将介绍操作Series和DataFrame中的数据的基本手段。后续章节将更加深入地挖掘pandas在数据分析和处理方面的功能。本书不是pandas库的详尽文档，主要关注的是最重要的功能，那些不大常用的内容（也就是那些更深奥的内容）就交给你自己去摸索吧。
 
-## 重新索引
+### 重新索引
 pandas对象的一个重要方法是reindex，其作用是创建一个新对象，它的数据符合新的索引。看下面的例子：
 ```python
 In [91]: obj = pd.Series([4.5, 7.2, -5.3, 3.6], index=['d', 'b', 'a', 'c'])
@@ -678,7 +680,7 @@ d      7   NaN           8
 
 ![](http://upload-images.jianshu.io/upload_images/7178691-efa3dbd4b83c61ec.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-## 丢弃指定轴上的项
+### 丢弃指定轴上的项
 丢弃某条轴上的一个或多个项很简单，只要有一个索引数组或列表即可。由于需要执行一些数据整理和集合逻辑，所以drop方法返回的是一个在指定轴上删除了指定值的新对象：
 ```python
 In [105]: obj = pd.Series(np.arange(5.), index=['a', 'b', 'c', 'd', 'e'])
@@ -768,7 +770,7 @@ dtype: float64
 
 小心使用inplace，它会销毁所有被删除的数据。
 
-## 索引、选取和过滤
+### 索引、选取和过滤
 Series索引（obj[...]）的工作方式类似于NumPy数组的索引，只不过Series的索引值不只是整数。下面是几个例子：
 ```python
 In [117]: obj = pd.Series(np.arange(4.), index=['a', 'b', 'c', 'd'])
@@ -907,7 +909,7 @@ New York   12   13     14    15
 
 这使得DataFrame的语法与NumPy二维数组的语法很像。
 
-## 用loc和iloc进行选取
+### 用loc和iloc进行选取
 对于DataFrame的行的标签索引，我引入了特殊的标签运算符loc和iloc。它们可以让你用类似NumPy的标记，使用轴标签（loc）或整数索引（iloc），从DataFrame选择行和列的子集。
 
 作为一个初步示例，让我们通过标签选择一行和多列：
@@ -967,7 +969,7 @@ ix运算符仍然可用，但并不推荐。
 
 ![表5-4 DataFrame的索引选项](http://upload-images.jianshu.io/upload_images/7178691-64354f2ab777bd8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-## 整数索引
+### 整数索引
 处理整数索引的pandas对象常常难住新手，因为它与Python内置的列表和元组的索引语法不同。例如，你可能不认为下面的代码会出错：
 ```python
 ser = pd.Series(np.arange(3.))
@@ -1012,7 +1014,7 @@ Out[149]:
 dtype: float64
 ```
 
-## 算术运算和数据对齐
+### 算术运算和数据对齐
 pandas最重要的一个功能是，它可以对不同索引的对象进行算术运算。在将对象相加时，如果存在不同的索引对，则结果的索引就是该索引对的并集。对于有数据库经验的用户，这就像在索引标签上进行自动外连接。看一个简单的例子：
 ```python
 In [150]: s1 = pd.Series([7.3, -2.5, 3.4, 1.5], index=['a', 'c', 'd', 'e'])
@@ -1116,7 +1118,7 @@ Out[164]:
 1 NaN NaN
 ```
 
-## 在算术方法中填充值
+### 在算术方法中填充值
 在对不同索引的对象进行算术运算时，你可能希望当一个对象中某个轴标签在另一个对象中找不到时填充一个特殊值（比如0）：
 ```python
 In [165]: df1 = pd.DataFrame(np.arange(12.).reshape((3, 4)),
@@ -1194,7 +1196,7 @@ Out[174]:
 2  8.0  9.0  10.0  11.0  0
 ```
 
-## DataFrame和Series之间的运算
+### DataFrame和Series之间的运算
 跟不同维度的NumPy数组一样，DataFrame和Series之间算术运算也是有明确规定的。先来看一个具有启发性的例子，计算一个二维数组与其某行之间的差：
 ```python
 In [175]: arr = np.arange(12.).reshape((3, 4))
@@ -1294,7 +1296,7 @@ Oregon -1.0  0.0  1.0
 
 传入的轴号就是希望匹配的轴。在本例中，我们的目的是匹配DataFrame的行索引（axis='index' or axis=0）并进行广播。
 
-## 函数应用和映射
+### 函数应用和映射
 NumPy的ufuncs（元素级数组方法）也可用于操作pandas对象：
 ```python
 In [190]: frame = pd.DataFrame(np.random.randn(4, 3), columns=list('bde'),
@@ -1380,7 +1382,7 @@ Oregon    -1.30
 Name: e, dtype: object
 ```
 
-## 排序和排名
+### 排序和排名
 根据条件对数据集排序（sorting）也是一种重要的内置运算。要对行或列索引进行排序（按字典顺序），可使用sort_index方法，它将返回一个已排序的新对象：
 ```python
 In [201]: obj = pd.Series(range(4), index=['d', 'a', 'b', 'c'])
@@ -1515,7 +1517,7 @@ dtype: float64
 
 你也可以按降序进行排名：
 ```python
-# Assign tie values the maximum rank in the group
+## Assign tie values the maximum rank in the group
 In [218]: obj.rank(ascending=False, method='max')
 Out[218]: 
 0    2.0
@@ -1552,7 +1554,7 @@ Out[221]:
 
 ![表5-6 排名时用于破坏平级关系的方法](http://upload-images.jianshu.io/upload_images/7178691-7edfab5b4a147581.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-## 带有重复标签的轴索引
+### 带有重复标签的轴索引
 直到目前为止，我所介绍的所有范例都有着唯一的轴标签（索引值）。虽然许多pandas函数（如reindex）都要求标签唯一，但这并不是强制性的。我们来看看下面这个简单的带有重复索引值的Series：
 ```python
 In [222]: obj = pd.Series(range(5), index=['a', 'a', 'b', 'b', 'c'])
@@ -1606,7 +1608,7 @@ b  1.669025 -0.438570 -0.539741
 b  0.476985  3.248944 -1.021228
 ```
 
-# 5.3 汇总和计算描述统计
+## 5.3 汇总和计算描述统计
 pandas对象拥有一组常用的数学和统计方法。它们大部分都属于约简和汇总统计，用于从Series中提取单个值（如sum或mean）或从DataFrame的行或列中提取一个Series。跟对应的NumPy数组方法相比，它们都是基于没有缺失数据的假设而构建的。看一个简单的DataFrame：
 ```python
 In [230]: df = pd.DataFrame([[1.4, np.nan], [7.1, -4.5],
@@ -1709,7 +1711,7 @@ dtype: object
 
 ![](http://upload-images.jianshu.io/upload_images/7178691-11fa967f658ac314.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-## 相关系数与协方差
+### 相关系数与协方差
 有些汇总统计（如相关系数和协方差）是通过参数对计算出来的。我们来看几个DataFrame，它们的数据来自Yahoo!Finance的股票价格和成交量，使用的是pandas-datareader包（可以用conda或pip安装）：
 ```python
 conda install pandas-datareader
@@ -1802,7 +1804,7 @@ dtype: float64
 
 传入axis='columns'即可按行进行计算。无论如何，在计算相关系数之前，所有的数据项都会按标签对齐。
 
-## 唯一值、值计数以及成员资格
+### 唯一值、值计数以及成员资格
 还有一类方法可以从一维Series的值中抽取信息。看下面的例子：
 ```python
 In [251]: obj = pd.Series(['c', 'a', 'd', 'a', 'a', 'b', 'b', 'c', 'c'])
@@ -1924,7 +1926,7 @@ Out[266]:
 
 这里，结果中的行标签是所有列的唯一值。后面的频率值是每个列中这些值的相应计数。
 
-# 5.4 总结
+## 5.4 总结
 在下一章，我们将讨论用pandas读取（或加载）和写入数据集的工具。
 
 之后，我们将更深入地研究使用pandas进行数据清洗、规整、分析和可视化工具。
